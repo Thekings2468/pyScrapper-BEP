@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.firefox.options import Options
 import sqlite3
 
 db = sqlite3.connect("db.sqlite3")
@@ -9,6 +10,8 @@ dbc.execute('''
     CREATE TABLE IF NOT EXISTS empregos(codigo TEXT PRIMARY KEY, tipo_oferta TEXT, vinculo TEXT,
     carreira TEXT, categoria TEXT, distrito TEXT, organismo TEXT, habilitacoes TEXT, data_limite TEXT)
 ''')
+options = Options()
+options.set_headless(headless=True)
 browser = webdriver.Firefox()
 browser.get("https://www.bep.gov.pt/pages/oferta/Oferta_Pesquisa_basica.aspx")
 searchForm = browser.find_element_by_id("ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_txtValor")
