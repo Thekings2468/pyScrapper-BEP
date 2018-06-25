@@ -22,7 +22,6 @@ submit.click()
 numRows = Select(browser.find_element_by_id("ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_ddlNReg"))
 numRows.select_by_value("50")
 print("Form Options Sent")
-#browser.minimize_window()
 dbc.execute("DELETE FROM empregos")
 done = False
 count = 1
