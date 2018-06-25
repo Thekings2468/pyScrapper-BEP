@@ -12,7 +12,8 @@ dbc.execute('''
 ''')
 options = Options()
 options.set_headless(headless=True)
-browser = webdriver.Firefox()
+browser = webdriver.Firefox(firefox_options=options)
+print("Fetching URL...")
 browser.get("https://www.bep.gov.pt/pages/oferta/Oferta_Pesquisa_basica.aspx")
 searchForm = browser.find_element_by_id("ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_txtValor")
 searchForm.send_keys("")
@@ -20,7 +21,8 @@ submit = browser.find_element_by_id("ctl00_ctl00_FormMasterContentPlaceHolder_Co
 submit.click()
 numRows = Select(browser.find_element_by_id("ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_ddlNReg"))
 numRows.select_by_value("50")
-browser.minimize_window()
+print("Form Options Sent")
+#browser.minimize_window()
 dbc.execute("DELETE FROM empregos")
 done = False
 count = 1
