@@ -26,6 +26,7 @@ dbc.execute("DELETE FROM empregos")
 done = False
 count = 1
 regs = 0
+print("Writing to database...")
 while done == False:
     html = browser.execute_script("return document.body.innerHTML")
     soup = BeautifulSoup(html, 'html.parser')
