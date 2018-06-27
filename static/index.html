@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ToDo API Client Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href="rest-client/css/bootstrap.min.css" rel="stylesheet">
+    <script src="rest-client/js/jquery-3.3.1.min.js"></script>
+    <script src="rest-client/js/bootstrap.min.js"></script>
+    <script src="rest-client/js/knockout-3.4.2.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a class="brand" href="#">ToDo API Client Demo</a>
+        </div>
+    </div>
+    <div id="main" class="container-fluid">
+        <table class="table table-striped table-bordered table-smc table-responsive">
+            <tr>
+                <td>
+                    <b>Código</b>
+                </td>
+                <td>
+                    <b>Tipo de Oferta</b>
+                </td>
+                <td>
+                    <b>Vínculo</b>
+                </td>
+                <td>
+                    <b>Carreira</b>
+                </td>
+                <td>
+                    <b>Categoria</b>
+                </td>
+                <td>
+                    <b>Distrito</b>
+                </td>
+                <td>
+                    <b>Organismo</b>
+                </td>
+                <td>
+                    <b>Habilitações</b>
+                </td>
+                <td>
+                    <b>Data Limite</b>
+                </td>
+            </tr>
+            <!-- ko foreach: tasks -->
+            <tr>
+                <td>
+                    <span data-bind="text: codigo"></span>
+                </td>
+                <td>
+                    <span data-bind="text: tipo_oferta"></span>
+                </td>
+                <td>
+                    <span data-bind="text: vinculo"></span>
+                </td>
+                <td>
+                    <span data-bind="text: carreira"></span>
+                </td>
+                <td>
+                    <span data-bind="text: categoria"></span>
+                </td>
+                <td>
+                    <span data-bind="text: distrito"></span>
+                </td>
+                <td>
+                    <span data-bind="text: organismo"></span>
+                </td>
+                <td>
+                    <span data-bind="text: habilitacoes"></span>
+                </td>
+                <td>
+                    <span data-bind="text: data_limite"></span>
+                </td>
+            </tr>
+            <!-- /ko -->
+        </table>
+    </div>
+    <script type="text/javascript">
+        function TasksViewModel() {
+            var self = this;
+            self.tasksURI = 'http://localhost:5000/jobs';
+            self.tasks = ko.observableArray();
+
+            self.ajax = function (uri, method, data) {
+                var request = {
+                    url: uri,
+                    type: method,
+                    contentType: "application/json",
+                    accepts: "application/json",
+                    cache: false,
+                    dataType: 'json',
+                    data: JSON.stringify(data),
+                    error: function (jqXHR) {
+                        console.log("ajax error " + jqXHR.status);
+                    }
+                };
+                return $.ajax(request);
+            }
+
+            self.ajax(self.tasksURI, 'GET').done(function (data) {
+                for (var i = 0; i < data.data.length; i++) {
+                    self.tasks.push({
+                        codigo: ko.observable(data.data[i].codigo),
+                        tipo_oferta: ko.observable(data.data[i].tipo_oferta),
+                        vinculo: ko.observable(data.data[i].vinculo),
+                        carreira: ko.observable(data.data[i].carreira),
+                        categoria: ko.observable(data.data[i].categoria),
+                        distrito: ko.observable(data.data[i].distrito),
+                        organismo: ko.observable(data.data[i].organismo),
+                        habilitacoes: ko.observable(data.data[i].habilitacoes),
+                        data_limite: ko.observable(data.data[i].data_limite)
+                    });
+                }
+            });
+        }
+        ko.applyBindings(new TasksViewModel(), $('#main')[0]);
+    </script>
+</body>
+</html>

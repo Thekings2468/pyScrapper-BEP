@@ -5,7 +5,7 @@ from json import dumps
 from flask_jsonpify import jsonify
 
 dbc = create_engine('sqlite:///db.sqlite3')
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 api = Api(app)
 
 class Jobs(Resource):
