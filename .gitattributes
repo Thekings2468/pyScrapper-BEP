@@ -1,2 +1,2 @@
 offlinetest.html linguist-vendored
-/static/rest-client/js linguist-vendored
+/static/rest-client/js/* linguist-vendored
