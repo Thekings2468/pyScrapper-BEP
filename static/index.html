@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ToDo API Client Demo</title>
+    <title>BEP Scrapper Front-End</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <link href="rest-client/css/bootstrap.min.css" rel="stylesheet">
@@ -9,12 +9,30 @@
     <script src="rest-client/js/bootstrap.min.js"></script>
     <script src="rest-client/js/knockout-3.4.2.js"></script>
 </head>
-<body>
-    <div class="navbar">
-        <div class="navbar-inner">
-            <a class="brand" href="#">ToDo API Client Demo</a>
+<body onload="ko.applyBindings(new TasksViewModel(null), $('#main')[0]);">
+    <script type="text/javascript">
+        var scat = null;
+    </script>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom:24px;">
+        <span class="navbar-brand">BEP Scrapper Front-End</span>
+        <div class="collapse navbar-collapse" id="navb">
+            <div class="mr-auto"></div>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" id="searchForm" placeholder="Pesquisar" type="text">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Pesquisar por...
+                    </button>
+                    <div class="dropdown-menu">
+                        <span class="dropdown-item" onclick="scat = 'type'; jobSearch();">Tipo de Oferta</span>
+                        <span class="dropdown-item" onclick="scat = 'contract'; jobSearch();">Contrato</span>
+                        <span class="dropdown-item">Link 3</span>
+                    </div>
+                </div> 
+                <button class="btn btn-success my-2 my-sm-0" type="button">Pesquisar</button>
+            </form>
         </div>
-    </div>
+    </nav>
     <div id="main" class="container-fluid">
         <table class="table table-striped table-bordered table-smc table-responsive">
             <tr>
@@ -80,11 +98,14 @@
         </table>
     </div>
     <script type="text/javascript">
-        function TasksViewModel() {
+        function TasksViewModel(scat) {
             var self = this;
-            self.tasksURI = 'http://localhost:5000/jobs';
+            if (scat == null) {
+                self.tasksURI = 'http://localhost:5002/jobs';
+            } else {
+                self.tasksURI = 'http://localhost:5002/search/' + scat + '/' + document.getElementById("searchForm").value;
+            }
             self.tasks = ko.observableArray();
-
             self.ajax = function (uri, method, data) {
                 var request = {
                     url: uri,
@@ -117,7 +138,10 @@
                 }
             });
         }
-        ko.applyBindings(new TasksViewModel(), $('#main')[0]);
+        function jobSearch(str) {
+            ko.clearNode($('#main')[0]);
+            ko.applyBindings(new TasksViewModel(scat), $('#main')[0]);
+        }
     </script>
 </body>
 </html>
