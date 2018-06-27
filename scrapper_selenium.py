@@ -40,7 +40,7 @@ while done == False:
         if listout != []:
             regs += 1
             dbc.execute('''INSERT INTO empregos(codigo, tipo_oferta, vinculo, carreira, categoria, distrito, organismo, habilitacoes, data_limite) 
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)''', (listout[0], listout[1], listout[2], listout[3], listout[4], listout[5], listout[6], listout[7], listout[8]))
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)''', (listout[0], listout[1], listout[2], listout[3], listout[4], listout[5].replace(';', '; '), listout[6], listout[7], listout[8]))
     db.commit()
     nextPage = browser.execute_script('''var paginationBar = document.getElementsByClassName('AspNet-GridView-Pagination');
         var paginationItems = paginationBar[0].getElementsByTagName('a');
