@@ -20,7 +20,7 @@ python3 scrapper_selenium.py
 ```
 python3 rest.py
 ```
-The API and the front-end are set to run in port 5002. The front-end search through category feature is incomplete and may lag some browsers while performing a search.
+The API and the front-end are set to listen in port 5002. The front-end search through category feature is incomplete and may lag some browsers while performing a search.
 ## Access the front-end
 Open your browser and type the following in the address bar: `http://127.0.0.1:5002/index.html`
 ## Available API methods
